@@ -1,0 +1,222 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.title-container h1 {
+  margin: 0 20px;
+  font-size: 2.5em;
+  color: #333;
+}
+
+.logo-izquierda, .logo-derecha {
+  width: 100px;
+  height: auto;
+}
+
+.description-container {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  color: #666;
+}
+
+.name-input-container {
+  margin-bottom: 20px;
+}
+
+.user-name {
+  padding: 10px;
+  font-size: 1em;
+  width: calc(100% - 110px);
+  box-sizing: border-box;
+}
+
+.submit-name-button {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-name-button:hover {
+  background-color: #45a049;
+}
+
+.multiplication {
+  font-size: 3em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.answer {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1.2em;
+}
+
+.start-button {
+  padding: 15px 30px;
+  font-size: 1em;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
+  margin: 20px auto;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.reset-button {
+  padding: 15px 30px;
+  font-size: 1em;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #eb3434;
+  color: white;
+  margin: 20px auto;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+} 
+
+.start-button:hover, .reset-button:hover {
+  background-color: #45a049;
+}
+
+.start-button:active, .reset-button:active {
+  background-color: #3e8e41;
+}
+
+.start-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.progress-container {
+  height: 20px;
+  background-color: #ddd;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 100%;
+  background-color: #4caf50;
+  transition: width 1s linear, background-color 1s linear;
+}
+
+.progress-bar-red {
+  background-color: #f44336;
+}
+
+.progress-bar-orange {
+  background-color: #ff9800;
+}
+
+.progress-bar-green {
+  background-color: #4caf50;
+}
+
+.countdown {
+  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.result {
+  margin-top: 5px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.result p {
+  margin: 5px 0;
+}
+
+.result .label {
+  font-weight: normal;
+  color: #333;
+}
+
+.result .value {
+  font-weight: bold;
+  color: #4caf50;
+}
+
+.user-greeting {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #666;
+}
+
+.leaderboard {
+  margin-top: 30px;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 1em;
+}
+
+.leaderboard-caption {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.leaderboard th, .leaderboard td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.leaderboard th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.leaderboard tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.leaderboard tr:hover {
+  background-color: #ddd;
+}
+
+.hidden {
+  display: none;
+}
