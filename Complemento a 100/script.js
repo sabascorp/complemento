@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Obtiene los elementos del DOM
     var countdownDisplay = document.getElementById('countdown');
     var progressBar = document.getElementById('progressBar');
     var answerInput = document.getElementById('answer');
@@ -6,10 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
     var startButton = document.getElementById('startButton');
     var resetButton = document.getElementById('resetButton');
     var leaderboardBody = document.getElementById('leaderboardBody');
-    var userNameInput = document.getElementById('userName');
+    var userNameInput = document.getElementById('userNameInput');
     var submitNameButton = document.getElementById('submitNameButton');
-    var userGreeting = document.getElementById('userGreeting');
-    var leaderboardCaption = document.querySelector('.leaderboard-caption');
+    var leaderboardCaption = document.getElementById('leaderboardCaption');
+    var nameInputContainer = document.getElementById('nameInputContainer');
+    var practiceContainer = document.getElementById('practiceContainer');
+    var leaderboard = document.getElementById('leaderboard');
     var correctAnswer;
     var timer;
     var correctCount = 0;
@@ -19,32 +22,96 @@ document.addEventListener('DOMContentLoaded', function() {
     var countdownTimer;
     var userName = '';
 
+    // Función para obtener un número aleatorio entre min y max
     function getRandomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    // Función para mostrar una nueva multiplicación aleatoria del 0 al 12
     function showMultiplication() {
         var num1 = getRandomNumber(0, 12);
         var num2 = getRandomNumber(0, 12);
         correctAnswer = num1 * num2;
-        document.getElementById('multiplication').innerText = num1 + ' x ' + num2 + ' = ';
+        document.getElementById('multiplication').innerText = num1 + ' x ' + num2;
     }
 
-    function updateProgressBar(progress) {
-        progressBar.style.width = progress + '%';
-        if (progress <= 1) {
-            progressBar.classList.remove('progress-bar-red', 'progress-bar-orange');
-        } else if (progress <= 10) {
-            progressBar.classList.remove('progress-bar-green', 'progress-bar-orange');
-            progressBar.classList.add('progress-bar-red');
-        } else if (progress <= 50) {
-            progressBar.classList.remove('progress-bar-green');
-            progressBar.classList.add('progress-bar-orange');
-        } else {
-            progressBar.classList.add('progress-bar-green');
+    // Función para verificar la respuesta del usuario
+    function checkAnswer() {
+        var userAnswer = parseInt(answerInput.value);
+        if (!isNaN(userAnswer)) {
+            totalAttempts++;
+            if (userAnswer === correctAnswer) {
+                correctCount++;
+                answerInput.style.backgroundColor = '#c8e6c9'; // Color verde claro para respuesta correcta
+            } else {
+                wrongCount++;
+                answerInput.style.backgroundColor = '#ffcdd2'; // Color rojo claro para respuesta incorrecta
+            }
+            setTimeout(function() {
+                answerInput.style.backgroundColor = '';
+            }, 500);
+            answerInput.value = '';
+            showMultiplication();
         }
     }
 
+    // Función para iniciar la práctica de multiplicaciones aleatorias
+    function startPractice() {
+        if (!practiceStarted) {
+            practiceStarted = true;
+            showMultiplication();
+            startCountdown();
+            answerInput.disabled = false;
+            answerInput.focus();
+            resetButton.style.display = 'none';
+        }
+    }
+
+    // Función para reiniciar la práctica
+    function resetPractice() {
+        clearInterval(timer);
+        clearInterval(countdownTimer);
+        countdownDisplay.textContent = '';
+        resultDisplay.textContent = '';
+        correctCount = 0;
+        wrongCount = 0;
+        totalAttempts = 0;
+        practiceStarted = false;
+        startButton.disabled = false;
+        resetButton.style.display = 'none';
+        progressBar.style.width = '100%';
+        answerInput.disabled = false;
+        answerInput.value = '';
+        progressBar.className = 'progress-bar progress-bar-green';
+    }
+
+    // Función para mostrar los resultados en la tabla de liderazgo
+    function showResults() {
+        var currentDate = new Date().toLocaleString();
+        var newRow = document.createElement('tr');
+        var difference = correctCount - wrongCount;
+        var classification = '';
+        
+        if (difference >= 0 && difference <= 19) {
+            classification = 'FP';
+        } else if (difference >= 20 && difference <= 29) {
+            classification = 'ED';
+        } else if (difference >= 30 && difference <= 39) {
+            classification = 'TP';
+        } else {
+            classification = 'CF';
+        }
+
+        newRow.innerHTML = '<td>' + currentDate + '</td>' +
+                           '<td>' + correctCount + '</td>' +
+                           '<td>' + wrongCount + '</td>' +
+                           '<td>' + totalAttempts + '</td>' +
+                           '<td>' + difference + '</td>' +
+                           '<td>' + classification + '</td>';
+        leaderboardBody.appendChild(newRow);
+    }
+
+    // Función para iniciar el temporizador de cuenta regresiva antes de comenzar la práctica
     function startCountdownTimer() {
         var countdownTime = 5;
         countdownDisplay.textContent = countdownTime;
@@ -60,60 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000);
     }
 
-    function startPractice() {
-        if (!practiceStarted) {
-            practiceStarted = true;
-            showMultiplication();
-            countdown();
-            answerInput.disabled = false;
-            answerInput.focus();
-            resetButton.style.display = 'none';
-        }
-    }
-
-    function resetPractice() {
-        clearInterval(timer);
-        clearInterval(countdownTimer);
-        countdownDisplay.textContent = '';
-        resultDisplay.textContent = '';
-        correctCount = 0;
-        wrongCount = 0;
-        totalAttempts = 0;
-        practiceStarted = false;
-        startButton.disabled = false;
-        resetButton.style.display = 'none';
-        progressBar.style.width = '100%';
-        answerInput.disabled = false;
-        answerInput.value = '';
-        answerInput.style.backgroundColor = '';
-    }
-
-    function showResults() {
-        var currentDate = new Date().toLocaleString();
-        var newRow = document.createElement('tr');
-        newRow.innerHTML = '<td>' + currentDate + '</td>' +
-                           '<td>' + correctCount + '</td>' +
-                           '<td>' + wrongCount + '</td>' +
-                           '<td>' + totalAttempts + '</td>' +
-                           '<td>' + (correctCount - wrongCount) + '</td>';
-        leaderboardBody.appendChild(newRow);
-    }
-
-    function checkAnswer() {
-        var userAnswer = parseInt(answerInput.value);
-        if (!isNaN(userAnswer)) {
-            totalAttempts++;
-            if (userAnswer === correctAnswer) {
-                correctCount++;
-            } else {
-                wrongCount++;
-            }
-            answerInput.value = '';
-            showMultiplication();
-        }
-    }
-
-    function countdown() {
+    // Función para iniciar la cuenta regresiva de la práctica
+    function startCountdown() {
         var totalTime = 60;
         var intervalDuration = 1000;
         var timeLeft = totalTime;
@@ -134,25 +149,38 @@ document.addEventListener('DOMContentLoaded', function() {
         }, intervalDuration);
     }
 
+    // Función para actualizar la barra de progreso
+    function updateProgressBar(progress) {
+        progressBar.style.width = progress + '%';
+        if (progress <= 10) {
+            progressBar.className = 'progress-bar progress-bar-red';
+        } else if (progress <= 50) {
+            progressBar.className = 'progress-bar progress-bar-orange';
+        } else {
+            progressBar.className = 'progress-bar progress-bar-green';
+        }
+    }
+
+    // Evento para enviar el nombre de usuario
     submitNameButton.addEventListener('click', function() {
         userName = userNameInput.value.trim();
-        if (userName) {
-            userGreeting.textContent = 'Usuario: ' + userName;
-            userNameInput.classList.add('hidden');
-            submitNameButton.classList.add('hidden');
+        if (userName !== '') {
+            nameInputContainer.style.display = 'none';
+            practiceContainer.classList.remove('hidden');
+            leaderboard.classList.remove('hidden');
+            leaderboardCaption.textContent = `Resultados de ${userName}`;
             startButton.disabled = false;
-            leaderboardCaption.textContent = 'Resultados para: ' + userName;
         }
     });
 
+    // Evento para iniciar la práctica
     startButton.addEventListener('click', startCountdownTimer);
+
+    // Evento para reiniciar la práctica
     resetButton.addEventListener('click', resetPractice);
     resetButton.style.display = 'none';
 
-    answerInput.addEventListener('input', function() {
-        this.value = this.value.replace(/[^0-9]/g, ''); // Solo permite números
-    });
-
+    // Evento para manejar el envío de respuestas con la tecla Enter
     answerInput.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
             event.preventDefault();
