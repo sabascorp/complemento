@@ -3,48 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multiplicaciones</title>
+  <title>Tabla de multiplicar</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
   <div class="container">
     <div class="title-container">
-      <img src="D:\Complemento a 100\imagenes\Global-Goal-Campaign-removebg-preview.png" class="logo-izquierda" alt="Logo Izquierda">
-      <h1>Multiplicaciones</h1>
-      <img src="D:\Complemento a 100\imagenes\Logo 40 AniversarioTransparente .png" class="logo-derecha" alt="Logo Derecha">
+      <img src="imagenes/eca.png" class="logo-izquierda" alt="Logo Izquierda">
+      <h1>Tabla de multiplicar</h1>
+      <img src="imagenes/globalgoals.png" class="logo-derecha" alt="Logo Derecha">
     </div>
     <div class="description-container">
-      <p>En esta práctica, deberás resolver tantas multiplicaciones como puedas en el tiempo dado. ¡Buena suerte!</p>
+      <p>En esta práctica, deberás calcular la tabla de multiplicar de números aleatorios del 0 al 12. ¡Buena suerte!</p>
     </div>
-    <div class="name-input-container">
-      <input type="text" id="userName" class="user-name" placeholder="Ingrese su nombre">
-      <button id="submitNameButton" class="submit-name-button">Enviar</button>
+    <div id="nameInputContainer" class="name-input-container">
+      <input type="text" id="userNameInput" placeholder="Ingrese su nombre">
+      <button id="submitNameButton" class="start-button">Enviar</button>
     </div>
-    <div id="multiplication" class="multiplication"></div>
-    <input type="text" id="answer" class="answer" placeholder="Ingrese su respuesta" disabled>
-    <button id="startButton" class="start-button" disabled>Iniciar</button>
-    <button id="resetButton" class="reset-button">Reiniciar</button>
-    <div class="progress-container">
-      <div id="progressBar" class="progress-bar"></div>
+    <div id="practiceContainer" class="hidden">
+      <div class="multiplication-container">
+        <div id="multiplication" class="multiplication"></div>
+        <br> <br>
+      </div>
+      <input type="text" id="answer" class="answer" placeholder="Ingrese su respuesta" disabled>
+      <div id="countdown" class="countdown"></div>
+      <button id="startButton" class="start-button" disabled>Iniciar</button>
+      <button id="resetButton" class="reset-button">Reiniciar</button>
+      <div class="progress-container">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+      <div id="result" class="result"></div>
     </div>
-    <div id="countdown" class="countdown"></div>
-    <div id="result" class="result"></div>
-    <h2 id="userGreeting" class="user-greeting"></h2>
-    <table id="leaderboard" class="leaderboard">
-      <caption class="leaderboard-caption"></caption>
+    <table id="leaderboard" class="leaderboard hidden">
+      <caption id="leaderboardCaption">Tabla de Liderazgo</caption>
       <thead>
         <tr>
           <th>Fecha y Hora</th>
           <th>Aciertos</th>
           <th>Errores</th>
-          <th>Total de intentos</th>
-          <th>Diferencia (Aciertos - Errores)</th>
+          <th>Intentos</th>
+          <th>Diferencia</th>
+          <th>Clasificación</th>
         </tr>
       </thead>
       <tbody id="leaderboardBody"></tbody>
     </table>
   </div>
-  <script src="script.js"></script>
 </body>
 </html>
